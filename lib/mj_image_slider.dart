@@ -24,7 +24,7 @@ class MJImageSlider extends StatefulWidget {
   State<MJImageSlider> createState() => _MJImageSliderState();
 }
 
-class _MJImageSliderState extends State<MJImageSlider> {
+class _MJImageSliderState extends State<MJImageSlider> with SingleTickerProviderStateMixin{
   PageController controller = PageController();
   double currentPageValue = 0.0;
   late Timer timer;
