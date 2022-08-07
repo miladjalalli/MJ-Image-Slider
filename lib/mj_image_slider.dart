@@ -24,7 +24,7 @@ class MJImageSlider extends StatefulWidget {
   State<MJImageSlider> createState() => _MJImageSliderState();
 }
 
-class _MJImageSliderState extends State<MJImageSlider> with SingleTickerProviderStateMixin{
+class _MJImageSliderState extends State<MJImageSlider> {
   PageController controller = PageController();
   double currentPageValue = 0.0;
   late Timer timer;
@@ -39,16 +39,13 @@ class _MJImageSliderState extends State<MJImageSlider> with SingleTickerProvider
 
     timer = Timer.periodic(widget.duration, (timer) {
       int nextPage = 0;
-      if(currentPageValue < widget.images.length - 1) {
-        nextPage = currentPageValue.toInt() + 1;
-      }
+      if (currentPageValue < widget.images.length - 1) nextPage = currentPageValue.toInt() + 1;
 
       if (widget.curve == null) {
-          controller.jumpToPage(nextPage);
-        } else {
-          controller.animateTo(nextPage.toDouble(), duration: widget.duration, curve: widget.curve!);
-        }
-
+        controller.jumpToPage(nextPage);
+      } else {
+        controller.animateToPage(nextPage, duration: widget.duration, curve: widget.curve!);
+      }
     });
     super.initState();
   }
