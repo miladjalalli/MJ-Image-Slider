@@ -58,24 +58,27 @@ class _MJImageSliderState extends State<MJImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: controller,
-      itemBuilder: (context, index) {
-        return widget.useLocalAssetImages
-            ? Image(
-                image: AssetImage(widget.images[index]),
-                height: widget.height,
-                width: widget.width,
-                fit: BoxFit.fill,
-              )
-            : Image(
-                image: NetworkImage(widget.images[index]),
-                height: widget.height,
-                width: widget.width,
-                fit: BoxFit.fill,
-              );
-      },
-      itemCount: widget.images.length,
-    );
+    return Container(
+        height: widget.height,
+        width: widget.width,
+        child: PageView.builder(
+          controller: controller,
+          itemBuilder: (context, index) {
+            return widget.useLocalAssetImages
+                ? Image(
+                    image: AssetImage(widget.images[index]),
+                    height: widget.height,
+                    width: widget.width,
+                    fit: BoxFit.fill,
+                  )
+                : Image(
+                    image: NetworkImage(widget.images[index]),
+                    height: widget.height,
+                    width: widget.width,
+                    fit: BoxFit.fill,
+                  );
+          },
+          itemCount: widget.images.length,
+        ));
   }
 }
