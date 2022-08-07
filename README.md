@@ -5,7 +5,7 @@
 ![](https://github.com/miladjalalli/MJ-Image-Slider/blob/master/images/example.gif?raw=true)
 
 
-##Hoe To Use
+## How To Use
 
 
 Here is an example:
@@ -18,13 +18,11 @@ Here is an example:
                 height: 200,
                 curve: Curves.easeInOutCubicEmphasized,
               ),
+    
 
-
-**
-images : List of images
-useLocalAssetImages : Set  this to True if images was load from assets Folder
-duration : Change Image Duration
-width : Width of image
-height : Height of image
-curve :  Use this for change images with animation
-**
+######  images : List of images
+######  useLocalAssetImages : Set  this to True if images was load from assets Folder
+######  duration : Change Image Duration
+######  width : Width of image
+######  height : Height of image
+######  curve :  Use this for change images with animation
