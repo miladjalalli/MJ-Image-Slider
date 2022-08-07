@@ -34,10 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> images =
       [
-        "assets/images/_1.jpg",
-        "assets/images/_1.jpg",
-        "assets/images/_1.jpg",
-        "assets/images/_1.jpg",
+        "assets/images/images_1.jpg",
+        "assets/images/images_2.jpg",
+        "assets/images/images_3.jpg",
+        "assets/images/images_4.jpg",
       ];
   List<String> networkImages =
       [
@@ -52,26 +52,45 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: SingleChildScrollView(
-          child: Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               MJImageSlider(
                 images: images,
                 useLocalAssetImages: true,
                 duration: const Duration(seconds: 3),
-                width: 640,
-                height: 426,
+                width: 320,
+                height: 213,
               ),
-              const SizedBox(height: 64,),
+              const SizedBox(height: 64,width: 64,),
               MJImageSlider(
                 images: networkImages,
                 useLocalAssetImages: false,
                 duration: const Duration(seconds: 3),
-                width: 640,
-                height: 426,
+                width: 320,
+                height: 213,
+                curve: Curves.easeInOutCubicEmphasized,
+              ),
+              const SizedBox(height: 64,width: 64,),
+              MJImageSlider(
+                images: networkImages,
+                useLocalAssetImages: false,
+                duration: const Duration(seconds: 3),
+                width: 320,
+                height: 213,
+                curve: Curves.easeInQuad,
+              ),
+              const SizedBox(height: 64,width: 64,),
+              MJImageSlider(
+                images: images,
+                useLocalAssetImages: true,
+                duration: const Duration(seconds: 3),
+                width: 320,
+                height: 213,
+                curve: Curves.fastOutSlowIn,
               ),
             ],
           ),
