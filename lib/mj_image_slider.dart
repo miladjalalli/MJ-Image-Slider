@@ -3,48 +3,52 @@ library mj_image_slider;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mj_image_slider/MJOptions.dart';
 
 class MJImageSlider extends StatefulWidget {
-  late List<String> images;
-  late bool useLocalAssetImages;
-  late Duration duration;
-  late double width;
-  late double height;
-  late Curve? curve; //use this when you want slider change with animation
+  late List<Widget> widgets;
+  MjOptions options;
 
-  MJImageSlider(
-      {required this.images,
-      required this.useLocalAssetImages,
-      required this.duration,
-      required this.width,
-      required this.height,
-      this.curve});
+  MJImageSlider({required this.widgets,
+    required this.options});
 
   @override
   State<MJImageSlider> createState() => _MJImageSliderState();
 }
 
 class _MJImageSliderState extends State<MJImageSlider> {
-  PageController controller = PageController();
+  late PageController controller;
   double currentPageValue = 0.0;
   late Timer timer;
 
   @override
   void initState() {
+    controller = PageController(
+        viewportFraction: widget.options.viewportFraction,
+        initialPage: widget.options.initialPage
+    );
+
     controller.addListener(() {
       setState(() {
         currentPageValue = controller.page!;
       });
     });
 
-    timer = Timer.periodic(widget.duration, (timer) {
-      int nextPage = 0;
-      if (currentPageValue < widget.images.length - 1) nextPage = currentPageValue.toInt() + 1;
+    timer = Timer.periodic(widget.options.autoPlayInterval, (timer) {
+      late int nextPage;
+      if (widget.options.enableInfiniteScroll){
+        nextPage = 0;
+      }else{
+        nextPage = currentPageValue.toInt();
+      }
 
-      if (widget.curve == null) {
+
+      if (currentPageValue < widget.widgets.length - 1) nextPage = currentPageValue.toInt() + 1;
+
+      if (widget.options.autoPlayCurve == null) {
         controller.jumpToPage(nextPage);
       } else {
-        controller.animateToPage(nextPage, duration: widget.duration, curve: widget.curve!);
+        controller.animateToPage(nextPage, duration: widget.options.autoPlayAnimationDuration, curve: widget.options.autoPlayCurve);
       }
     });
     super.initState();
@@ -58,27 +62,34 @@ class _MJImageSliderState extends State<MJImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: widget.height,
-        width: widget.width,
+    return widget.options.height != null
+        ? SizedBox(
+        height: widget.options.height,
+        width: widget.options.width,
         child: PageView.builder(
           controller: controller,
           itemBuilder: (context, index) {
-            return widget.useLocalAssetImages
-                ? Image(
-                    image: AssetImage(widget.images[index]),
-                    height: widget.height,
-                    width: widget.width,
-                    fit: BoxFit.fill,
-                  )
-                : Image(
-                    image: NetworkImage(widget.images[index]),
-                    height: widget.height,
-                    width: widget.width,
-                    fit: BoxFit.fill,
-                  );
+            return widget.widgets[index];
           },
-          itemCount: widget.images.length,
-        ));
+          onPageChanged: (index){
+            widget.options.onPageChanged!(index);
+          },
+          scrollDirection: widget.options.scrollDirection,
+          itemCount: widget.widgets.length,
+        ))
+        : AspectRatio(
+      aspectRatio: widget.options.aspectRatio,
+      child: PageView.builder(
+        controller: controller,
+        itemBuilder: (context, index) {
+          return widget.widgets[index];
+        },
+        onPageChanged: (index){
+          widget.options.onPageChanged!(index);
+        },
+        scrollDirection: widget.options.scrollDirection,
+        itemCount: widget.widgets.length,
+      ),
+    );
   }
 }
