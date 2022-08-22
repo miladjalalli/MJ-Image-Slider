@@ -1,6 +1,6 @@
 name: mj_image_slider
 description: A Flutter package for all platforms which provides a simple image slider with/without animation
-version: 0.0.6
+version: 0.0.7
 homepage: https://github.com/miladjalalli/MJ-Image-Slider
 
 environment:
