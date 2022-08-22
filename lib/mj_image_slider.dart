@@ -3,7 +3,7 @@ library mj_image_slider;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mj_image_slider/MJOptions.dart';
+import 'package:mj_image_slider/mj_options.dart';
 
 class MJImageSlider extends StatefulWidget {
   late List<Widget> widgets;

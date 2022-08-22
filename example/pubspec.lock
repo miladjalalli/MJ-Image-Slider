@@ -108,7 +108,7 @@ packages:
       name: mj_image_slider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.4"
+    version: "0.0.6"
   path:
     dependency: transitive
     description:

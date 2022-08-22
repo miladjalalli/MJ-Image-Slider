@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mj_image_slider/MJOptions.dart';
 import 'package:mj_image_slider/mj_image_slider.dart';
 
 void main() {
@@ -31,21 +32,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<String> images = [
+    "assets/images/images_1.jpg",
+    "assets/images/images_2.jpg",
+    "assets/images/images_3.jpg",
+    "assets/images/images_4.jpg",
+  ];
+  List<String> networkImages = [
+    "https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80",
+    "https://images.unsplash.com/photo-1546587348-d12660c30c50?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80",
+    "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    "https://images.unsplash.com/photo-1525127752301-99b0b6379811?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  ];
 
-  List<String> images =
-      [
-        "assets/images/images_1.jpg",
-        "assets/images/images_2.jpg",
-        "assets/images/images_3.jpg",
-        "assets/images/images_4.jpg",
-      ];
-  List<String> networkImages =
-      [
-        "https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80",
-        "https://images.unsplash.com/photo-1546587348-d12660c30c50?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80",
-        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-        "https://images.unsplash.com/photo-1525127752301-99b0b6379811?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,43 +58,32 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               MJImageSlider(
-                images: images,
-                useLocalAssetImages: true,
-                duration: const Duration(seconds: 3),
-                width: 320,
-                height: 213,
+                options: MjOptions(onPageChanged: (i) {}, scrollDirection: Axis.vertical, height: 200, width: 400, viewportFraction: 4.0),
+                widgets: [...images.map((e) => Image(image: AssetImage(e))).toList()],
               ),
-              const SizedBox(height: 64,width: 64,),
-              MJImageSlider(
-                images: networkImages,
-                useLocalAssetImages: false,
-                duration: const Duration(seconds: 3),
-                width: 320,
-                height: 213,
-                curve: Curves.easeInOutCubicEmphasized,
+              const SizedBox(
+                width: 32,
               ),
-              const SizedBox(height: 64,width: 64,),
               MJImageSlider(
-                images: networkImages,
-                useLocalAssetImages: false,
-                duration: const Duration(seconds: 3),
-                width: 320,
-                height: 213,
-                curve: Curves.easeInQuad,
+                options: MjOptions(
+                    onPageChanged: (i) {}, enableInfiniteScroll: false, autoPlayCurve: Curves.easeInToLinear, height: 200, width: 400, viewportFraction: 1.0),
+                widgets: [...networkImages.map((e) => Image(image: NetworkImage(e))).toList()],
               ),
-              const SizedBox(height: 64,width: 64,),
+              const SizedBox(
+                width: 32,
+              ),
               MJImageSlider(
-                images: images,
-                useLocalAssetImages: true,
-                duration: const Duration(seconds: 3),
-                width: 320,
-                height: 213,
-                curve: Curves.fastOutSlowIn,
+                options: MjOptions(onPageChanged: (i) {}, autoPlayCurve: Curves.easeInExpo, height: 200, width: 400, viewportFraction: 0.8),
+                widgets: [
+                  ...networkImages
+                      .map((e) => Image(image: NetworkImage(e)))
+                      .toList()
+                ],
               ),
             ],
           ),
         ),
-      ),// This trailing comma makes auto-formatting nicer for build methods.
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

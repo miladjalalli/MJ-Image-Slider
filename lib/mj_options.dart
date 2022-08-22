@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
+class MjOptions {
+  MjOptions({
+    this.height,
+    this.width,
+    this.aspectRatio: 16 / 9,
+    this.viewportFraction: 0.8,
+    this.initialPage: 0,
+    this.enableInfiniteScroll: true,
+    this.autoPlayInterval: const Duration(seconds: 4),
+    this.autoPlayAnimationDuration = const Duration(milliseconds: 800),
+    this.autoPlayCurve: Curves.fastOutSlowIn,
+    this.onPageChanged,
+    this.scrollDirection: Axis.horizontal,
+  });
 
-class MjOptions{
   /// Set slider height and overrides any existing [aspectRatio].
   double? height;
 
@@ -21,7 +34,7 @@ class MjOptions{
   /// The initial page to show when first creating the [Slider].
   ///
   /// Defaults to 0.
-  int initialPage = 0;
+  int initialPage;
 
   ///Determines if slider should loop infinitely or be limited to item length.
   ///
@@ -44,7 +57,6 @@ class MjOptions{
   /// Defaults to [Curves.fastOutSlowIn].
   late Curve autoPlayCurve;
 
-
   /// The axis along which the page view scrolls.
   ///
   /// Defaults to [Axis.horizontal].
@@ -52,5 +64,4 @@ class MjOptions{
 
   /// Called whenever the page in the center of the viewport changes.
   Function(int index)? onPageChanged;
-
 }
